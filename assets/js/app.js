@@ -5,7 +5,10 @@ const APIController = (function() {
 
     // private methods
     const _getToken = async () => {
-
+        /**
+         * Retrieves an access token for the Spotify Web API
+         * @return {String} data access token
+         */
         const result = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
             headers: {
@@ -20,7 +23,11 @@ const APIController = (function() {
     }
     
     const _getGenres = async (token) => {
-
+        /**
+         * Retrieves list of Spotify genreIDs
+         * @param  {String}   token  data access token
+         * @return {[String]}        array of genreIDs 
+         */
         const result = await fetch(`https://api.spotify.com/v1/recommendations/available-genre-seeds`, {
             method: 'GET',
             headers: { 'Authorization' : 'Bearer ' + token}
@@ -31,7 +38,12 @@ const APIController = (function() {
     }
 
     const _getPlaylistsByGenre = async (token, genreId) => {
-
+        /**
+         * Retrieves list of Spotify playlists for a given genre.
+         * @param   {String}   token    data access token
+         * @param   {String}   genreID  name of a genre
+         * @return  {[Object]}          array of spotify playlists 
+         */
         const limit = 10;
         
         const result = await fetch(`https://api.spotify.com/v1/browse/categories/${genreId}/playlists?limit=${limit}`, {
@@ -44,7 +56,12 @@ const APIController = (function() {
     }
 
     const _getTracks = async (token, tracksEndPoint) => {
-
+        /**
+         * Retrieves list of tracks from a spotify playlist.
+         * @param   {String}   token          data access token
+         * @param   {String}   tracksEndPoint URL for a playlist
+         * @return  {[Object]}                Array of track objects
+         */
         const limit = 10;
 
         const result = await fetch(`${tracksEndPoint}?limit=${limit}`, {
@@ -57,7 +74,12 @@ const APIController = (function() {
     }
 
     const _getTrack = async (token, trackEndPoint) => {
-
+        /**
+         * Retrieves list of tracks from a spotify playlist.
+         * @param   {String}  token          data access token
+         * @param   {String}  trackEndPoint  URL for a track
+         * @return  {Object}                 track object
+         */
         const result = await fetch(`${trackEndPoint}`, {
             method: 'GET',
             headers: { 'Authorization' : 'Bearer ' + token}
