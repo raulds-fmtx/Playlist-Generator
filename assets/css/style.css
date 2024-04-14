@@ -3,8 +3,6 @@
     --bulma-size-medium: 1.25rem;
     color:white;
 }
-  
-
 
 .navbar {
     width: 100%;
@@ -12,9 +10,6 @@
     font-weight: bold;
     text-align: center;
 }
-
-
-
 
 .panel {
     width: 100%;

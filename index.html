@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-   <!--Jerrika - Added the Bulma  & CSS Link-->
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="./assets/css/style.css" />
+    <!--Jerrika - Added the Bulma  & CSS Link-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./assets/css/style.css" />
 
     <title>Playlist Generator</title>
 </head>
@@ -19,6 +19,32 @@
     <div class="section1 has-text-centered">
         <h1 class="is-size-1">Playlist Generator</h1>
     </div>
+
+    <div id="playlist-select" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Select-Playlist</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="select">
+                    <select id="playlist-select">
+                      <option>Playlist-1</option>
+                      <option>Playlist-2</option>
+                    </select>
+                  </div>
+            </section>
+            <footer class="modal-card-foot">
+                <div class="buttons">
+                    <button class="button is-link">Submit</button>
+                    <button class="button">Cancel</button>
+                </div>
+            </footer>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+      
 
     <div class="section2 columns"> 
         <!--J.G Wiki Panel Starts-->
@@ -33,45 +59,22 @@
             <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div id="selection-navbar" class="navbar-menu">
                     <div class="navbar-start">  
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a class="navbar-link">
-                            Select Genre
-                            </a>
-                    
-                            <div class="navbar-dropdown">
-                                <a class="navbar-item">
-                                    Genre-1
-                                </a>
-                                <a class="navbar-item">
-                                    Genre-2
-                                </a>
-                                <a class="navbar-item">
-                                    Genre-3
-                                </a>
-                            </div>
+                        <div class="navbar-item ui-widget">
+                            <input
+                                class="input is-link"
+                                id="genre-select"
+                                type="text"
+                                placeholder="Select Genre"
+                            />
                         </div>
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a class="navbar-link">
-                                Select Playlist
-                            </a>
-                    
-                            <div class="navbar-dropdown">
-                                <a class="navbar-item">
-                                    Playlist-1
-                                </a>
-                                <a class="navbar-item">
-                                    Playlist-2
-                                </a>
-                                <a class="navbar-item">
-                                    Playlist-3
-                                </a>
-                            </div>
+                        <div class="navbar-item js-modal-trigger" data-target="playlist-select">
+                            <button class="button is-link">Submit</button>
                         </div>
                     </div>
                 </div>
             </nav>
             <!--Dropdown Menu ends-->
-            <div class="spotify">Spotify
+            <div class="spotify">
             </div>
         </div>
     </div>
@@ -87,6 +90,7 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
         integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script> -->
     <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/modal.js"></script>
 </body>
 
 </html>
