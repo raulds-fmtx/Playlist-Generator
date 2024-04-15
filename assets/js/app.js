@@ -99,6 +99,9 @@ const SpotifyController = (function() {
         getPlaylistsByGenre(token, genreId) {
             return _getPlaylistsByGenre(token, genreId);
         },
+        getRecommendations(token, genreId) {
+            return _getRecommendations(token, genreId);
+        },
         getTracks(token, tracksEndPoint) {
             return _getTracks(token, tracksEndPoint);
         },
@@ -187,10 +190,9 @@ const APPController = (function(UICtrl,SPTCtrl) {
         const token = UICtrl.getStoredToken().token;
         const genreSelect = UICtrl.inputField().genre;
         const genreId = genreSelect.value;
-        const playlists = await SPTCtrl.getPlaylistsByGenre(token,genreId);
-        // save genre to local storage
-        // Add ability to catch errors (make recommendations by genre rather than seleciton of playlists)
-        // Revert input field to default
+        genreSelect.value = '';
+        localStorage.setItem('genre',genreId);
+        const playlists = await SPTCtrl.getPlaylistsByGenre(token, genreId);
         playlists.forEach(p => UICtrl.createPlaylist(p.name, p.tracks.href));
     });
 
