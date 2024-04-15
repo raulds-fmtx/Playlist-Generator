@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" />
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/ui-darkness/jquery-ui.css" />
     <!--Jerrika - Added the Bulma  & CSS Link-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./assets/css/style.css" />
@@ -29,7 +29,7 @@
             </header>
             <section class="modal-card-body">
                 <div class="select">
-                    <select id="playlist-select">
+                    <select id="select-playlist">
                       <option>Playlist-1</option>
                       <option>Playlist-2</option>
                     </select>
@@ -37,7 +37,7 @@
             </section>
             <footer class="modal-card-foot">
                 <div class="buttons">
-                    <button class="button is-link">Submit</button>
+                    <button class="button is-link" id="submit-playlist">Submit</button>
                     <button class="button">Cancel</button>
                 </div>
             </footer>
@@ -50,7 +50,7 @@
         <!--J.G Wiki Panel Starts-->
         <div class="wiki column is-one-quarter ml-2"> 
             <nav class="panel has-text-centered">
-                <p class="panel-heading has-background-dark">Genre Information</p>
+                <p class="panel-heading has-background-success has-text-dark">Genre Information</p>
             </nav>
         </div>
         <!--J.G Wiki Panel Ends-->
@@ -62,19 +62,19 @@
                         <div class="navbar-item ui-widget">
                             <input
                                 class="input is-success"
-                                id="genre-select"
+                                id="select-genre"
                                 type="text"
                                 placeholder="Select Genre"
                             />
                         </div>
-                        <div class="navbar-item js-modal-trigger" data-target="playlist-select">
+                        <div class="navbar-item js-modal-trigger" data-target="playlist-select" id="submit-genre">
                             <button class="button is-success">Submit</button>
                         </div>
                     </div>
                 </div>
             </nav>
             <!--Dropdown Menu ends-->
-            <div class="spotify">
+            <div class="spotify pl-3 pr-5" id="song-container">
             </div>
         </div>
     </div>
@@ -85,8 +85,9 @@
         </div>
     </div> -->
 
+    <input type="hidden" id='hidden-token'>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
         integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script> -->
     <script src="./assets/js/app.js"></script>
