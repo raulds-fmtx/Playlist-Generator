@@ -5,35 +5,91 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Wikipedia Music Genre Search</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/ui-darkness/jquery-ui.css" />
+    <!--Jerrika - Added the Bulma  & CSS Link-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
+    <title>Playlist Generator</title>
 </head>
 
 <body>
-    <section class="section">
-        <div class="container">
-            <h1 class="title">Wikipedia Music Genre Search</h1>
-            <div class="field has-addons">
-                <div class="control">
-                    <label class="label" for="search-query">Enter music genre (pop, rock, hip hop)</label>
-                    <input class="input" type="text" id="search-query" placeholder="Enter music genre (pop, rock, hip hop)" />
+    <div class="section1 has-text-centered has-background-dark has-text-light mb-2">
+        <h1 class="is-size-1">Playlist Generator</h1>
+    </div>
+
+    <div id="playlist-select" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Select-Playlist</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="select">
+                    <select id="select-playlist">
+                    </select>
+                  </div>
+            </section>
+            <footer class="modal-card-foot">
+                <div class="buttons">
+                    <button class="button is-link" id="submit-playlist">Submit</button>
+                    <button class="button">Cancel</button>
                 </div>
-                <div class="control">
-                    <button class="button is-info" id="search-wikipedia">Search</button>
+            </footer>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+      
+
+    <div class="section2 columns"> 
+        <!--J.G Wiki Panel Starts-->
+        <div class="wiki column is-one-quarter ml-2"> 
+            <nav class="panel has-text-centered">
+                <p class="panel-heading has-background-success has-text-dark">Genre Information</p>
+            </nav>
+        </div>
+        <!--J.G Wiki Panel Ends-->
+        <div class="genre column is-three-quarters">
+            <!--Genre Selector dropdown Menu Begins-->
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div id="selection-navbar" class="navbar-menu">
+                    <div class="navbar-start">  
+                        <div class="navbar-item ui-widget">
+                            <input
+                                class="input is-success"
+                                id="select-genre"
+                                type="text"
+                                placeholder="Select Genre"
+                            />
+                        </div>
+                        <div class="navbar-item js-modal-trigger" data-target="playlist-select" id="submit-genre">
+                            <button class="button is-success">Submit</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="field">
-                <label class="label" for="search-results">Search Results</label>
-                <div class="control">
-                    <textarea class="textarea" id="search-results" readonly></textarea>
-                </div>
+            </nav>
+            <!--Dropdown Menu ends-->
+            <div class="spotify pl-3 pr-5" id="song-container">
             </div>
         </div>
-    </section>
+    </div>
+   
 
-    <!-- Include JavaScript files here -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="sctipt.js"></script>
+    <!-- <div class="section5">
+        <div class="footer">Footer
+        </div>
+    </div> -->
+
+    <input type="hidden" id='hidden-token'>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+        integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script> -->
+    <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/modal.js"></script>
 </body>
 
 </html>

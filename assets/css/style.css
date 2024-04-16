@@ -1,0 +1,34 @@
+:root {
+    /* Default global value */
+    --bulma-size-medium: 1.25rem;
+    color:white;
+}
+
+.navbar {
+    width: 100%;
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+}
+
+.panel {
+    width: 100%;
+    height: 600px;
+}
+
+.genre  {
+    width: 100%;
+    height: 80px;    
+    float:right;
+}
+
+.spotify {
+    width: 100%;
+    height: 500px;
+    float:right;
+}
+
+.footer {
+    width: 100%;
+    height: 20px;
+}
