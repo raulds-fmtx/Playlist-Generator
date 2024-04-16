@@ -125,6 +125,13 @@ const UIController = (function() {
 
     return {
         inputField() {
+            /**
+             * Retrieves html elements for input fields
+             * @return  {Object}    genre select text input field
+             * @return  {Object}    genre select submit button
+             * @return  {Object}    playlist select choice input field
+             * @return  {Object}    playlist select submit button
+             */
             return {
                 genre: document.querySelector(DOMElements.selectGenre),
                 submitGenre: document.querySelector(DOMElements.submitGenre),
@@ -134,6 +141,10 @@ const UIController = (function() {
             }
         },
         autocompleteGenres(genres) {
+            /**
+             * Activates autocomplete on genre search bar
+             * @param   {[String]}  genres Array of strings denoting genreIds
+             */
             $(DOMElements.selectGenre).autocomplete({
                 source: function(request, response) {
                     var results = $.ui.autocomplete.filter(genres, request.term);
@@ -143,10 +154,20 @@ const UIController = (function() {
             });
         },
         createPlaylist(text, value) {
+            /**
+             * Create playlist selection option
+             * @param   {String}    text playlist title
+             * @param   {String}    value playlist uri
+             */
             const html = `<option value="${value}">${text}</option>`;
             document.querySelector(DOMElements.selectPlaylist).insertAdjacentHTML('beforeend', html);
         },
         createTrack(id, name) {
+            /**
+             * Create track html element
+             * @param   {String}    id track uri
+             * @param   {String}    name track title
+             */
             const html = 
             `<div class="card is-background-dark m-0" style="--bulma-card-radius:0; width:100%" id="${id}">
                 <div class="card-content py-2">
@@ -156,16 +177,30 @@ const UIController = (function() {
             document.querySelector(DOMElements.songContainer).insertAdjacentHTML('beforeend', html);
         },
         resetTracks() {
+            /**
+             * Resets track list
+             */
             this.inputField().songList.innerHTML = '';
         },
         resetPlaylist() {
+            /**
+             * Resets playlist selection options
+             */
             this.inputField().playlist.innerHTML = '';
             this.resetTracks();
         },
         storeToken(value) {
+            /**
+             * Stores hidden token
+             * @param   {String}    value token
+             */
             document.querySelector(DOMElements.accessToken).value = value;
         },
         getStoredToken() {
+            /**
+             * Gets hidden token
+             * @return  {String}    token
+             */
             return {
                 token: document.querySelector(DOMElements.accessToken).value
             }
@@ -176,29 +211,53 @@ const UIController = (function() {
 
 const APPController = (function(UICtrl,SPTCtrl) {
     
+    // DOM input fields
     const DOMInputs = UICtrl.inputField();
 
     const loadGenres = async () => {
+        /**
+         * Load genres and activate autocomplete
+         */
         const token = await SPTCtrl.getToken();
-        UICtrl.storeToken(token);
         const genres = await SPTCtrl.getGenres(token);
+        UICtrl.storeToken(token);
         UICtrl.autocompleteGenres(genres);
     }
 
     DOMInputs.submitGenre.addEventListener('click', async () => {
-        UICtrl.resetPlaylist();
+        /**
+         * Event Listener for genre submission button.
+         * Retrieves and displays playlists based on genre.
+         */
         const token = UICtrl.getStoredToken().token;
         const genreSelect = UICtrl.inputField().genre;
         const genreId = genreSelect.value;
-        genreSelect.value = '';
+
         localStorage.setItem('genre',genreId);
-        const playlists = await SPTCtrl.getPlaylistsByGenre(token, genreId);
-        playlists.forEach(p => UICtrl.createPlaylist(p.name, p.tracks.href));
+        UICtrl.resetPlaylist();
+        UICtrl.inputField().submitPlaylist.style.display = 'flex';
+        genreSelect.value = '';
+
+        // If genre has playlists display the options
+        // If an error occurs, remove the submssion button, and inform user
+        try {
+            const playlists = await SPTCtrl.getPlaylistsByGenre(token, genreId);
+            playlists.forEach(p => UICtrl.createPlaylist(p.name, p.tracks.href));
+        } catch (error) {
+            UICtrl.inputField().submitPlaylist.style.display = 'none';
+            UICtrl.createPlaylist('No playlist available for this genre.')
+        }
     });
 
     DOMInputs.submitPlaylist.addEventListener('click', async (e) => {
+        /**
+         * Event Listener for playlist submission button.
+         * Retrieves and displays tracks from the selected playlist.
+         */
+
         e.preventDefault();
-        UICtrl.resetTracks();
+        UICtrl.resetTracks(); // Reset track display
+
         const token = UICtrl.getStoredToken().token;
         const playlistSelect = UICtrl.inputField().playlist;
         const tracksEndPoint = playlistSelect.value;
