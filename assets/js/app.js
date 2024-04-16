@@ -125,6 +125,13 @@ const UIController = (function() {
 
     return {
         inputField() {
+            /**
+             * Retrieves html elements for input fields
+             * @return  {Object}    genre select text input field
+             * @return  {Object}    genre select submit button
+             * @return  {Object}    playlist select choice input field
+             * @return  {Object}    playlist select submit button
+             */
             return {
                 genre: document.querySelector(DOMElements.selectGenre),
                 submitGenre: document.querySelector(DOMElements.submitGenre),
@@ -134,6 +141,10 @@ const UIController = (function() {
             }
         },
         autocompleteGenres(genres) {
+            /**
+             * Activates autocomplete on genre search bar
+             * @param   {[String]}  genres Array of strings denoting genreIds
+             */
             $(DOMElements.selectGenre).autocomplete({
                 source: function(request, response) {
                     var results = $.ui.autocomplete.filter(genres, request.term);
@@ -143,29 +154,55 @@ const UIController = (function() {
             });
         },
         createPlaylist(text, value) {
+            /**
+             * Create playlist selection option
+             * @param   {String}    text playlist title
+             * @param   {String}    value playlist uri
+             */
             const html = `<option value="${value}">${text}</option>`;
             document.querySelector(DOMElements.selectPlaylist).insertAdjacentHTML('beforeend', html);
         },
-        createTrack(id, name) {
+        createTrack(name, artist, imageURL) {
+            /**
+             * Create track html element
+             * @param   {String}    name        track title
+             * @param   {String}    artist      artist name
+             * @param   {String}    imageURL    link to album cover image
+             */
             const html = 
-            `<div class="card is-background-dark m-0" style="--bulma-card-radius:0; width:100%" id="${id}">
-                <div class="card-content py-2">
-                    <div class="content">
-                        <h4 class="my-2">${name}</h4>
+            `<div class="card is-background-dark m-0" style="--bulma-card-radius:0; width:100%">
+                <div class="card-content py-0">
+                    <div class="content grid">
+                        <h4 class="mt-3 cell">${name} by ${artist}</h4>
+                        <img class="cell" src=${imageURL} height="50px" width="50px">
                     </div></div></div>`;
             document.querySelector(DOMElements.songContainer).insertAdjacentHTML('beforeend', html);
         },
         resetTracks() {
+            /**
+             * Resets track list
+             */
             this.inputField().songList.innerHTML = '';
         },
         resetPlaylist() {
+            /**
+             * Resets playlist selection options
+             */
             this.inputField().playlist.innerHTML = '';
             this.resetTracks();
         },
         storeToken(value) {
+            /**
+             * Stores hidden token
+             * @param   {String}    value token
+             */
             document.querySelector(DOMElements.accessToken).value = value;
         },
         getStoredToken() {
+            /**
+             * Gets hidden token
+             * @return  {String}    token
+             */
             return {
                 token: document.querySelector(DOMElements.accessToken).value
             }
@@ -176,35 +213,63 @@ const UIController = (function() {
 
 const APPController = (function(UICtrl,SPTCtrl) {
     
+    // DOM input fields
     const DOMInputs = UICtrl.inputField();
 
     const loadGenres = async () => {
+        /**
+         * Load genres and activate autocomplete
+         */
         const token = await SPTCtrl.getToken();
-        UICtrl.storeToken(token);
         const genres = await SPTCtrl.getGenres(token);
+        UICtrl.storeToken(token);
         UICtrl.autocompleteGenres(genres);
     }
 
     DOMInputs.submitGenre.addEventListener('click', async () => {
-        UICtrl.resetPlaylist();
+        /**
+         * Event Listener for genre submission button.
+         * Retrieves and displays playlists based on genre.
+         */
         const token = UICtrl.getStoredToken().token;
         const genreSelect = UICtrl.inputField().genre;
         const genreId = genreSelect.value;
-        genreSelect.value = '';
+
         localStorage.setItem('genre',genreId);
-        const playlists = await SPTCtrl.getPlaylistsByGenre(token, genreId);
-        playlists.forEach(p => UICtrl.createPlaylist(p.name, p.tracks.href));
+        UICtrl.resetPlaylist();
+        UICtrl.inputField().submitPlaylist.style.display = 'flex';
+        genreSelect.value = ''; // Reset genre select input field
+
+        // If genre has playlists display the options
+        // If an error occurs, remove the submssion button, and inform user
+        try {
+            const playlists = await SPTCtrl.getPlaylistsByGenre(token, genreId);
+            playlists.forEach(p => UICtrl.createPlaylist(p.name, p.tracks.href));
+        } catch (error) {
+            UICtrl.inputField().submitPlaylist.style.display = 'none';
+            UICtrl.createPlaylist('No playlist available for this genre.')
+        }
     });
 
     DOMInputs.submitPlaylist.addEventListener('click', async (e) => {
+        /**
+         * Event Listener for playlist submission button.
+         * Retrieves and displays tracks from the selected playlist.
+         */
+
         e.preventDefault();
-        UICtrl.resetTracks();
+        UICtrl.resetTracks(); // Reset track display
+
         const token = UICtrl.getStoredToken().token;
         const playlistSelect = UICtrl.inputField().playlist;
         const tracksEndPoint = playlistSelect.value;
         const tracks = await SPTCtrl.getTracks(token, tracksEndPoint);
-        tracks.forEach(el => UICtrl.createTrack(el.track.href, el.track.name));
-        // Display track cover image and artist?
+
+        // Create track card for each track in the playlist
+        tracks.forEach(async (el) => {
+            const track = await SPTCtrl.getTrack(token, el.track.href);
+            UICtrl.createTrack(track.name, track.artists[0].name, track.album.images[2].url);
+        });
     });
 
     return {
