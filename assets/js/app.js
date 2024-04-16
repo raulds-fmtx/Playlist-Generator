@@ -162,17 +162,19 @@ const UIController = (function() {
             const html = `<option value="${value}">${text}</option>`;
             document.querySelector(DOMElements.selectPlaylist).insertAdjacentHTML('beforeend', html);
         },
-        createTrack(id, name) {
+        createTrack(name, artist, imageURL) {
             /**
              * Create track html element
-             * @param   {String}    id track uri
-             * @param   {String}    name track title
+             * @param   {String}    name        track title
+             * @param   {String}    artist      artist name
+             * @param   {String}    imageURL    link to album cover image
              */
             const html = 
-            `<div class="card is-background-dark m-0" style="--bulma-card-radius:0; width:100%" id="${id}">
-                <div class="card-content py-2">
-                    <div class="content">
-                        <h4 class="my-2">${name}</h4>
+            `<div class="card is-background-dark m-0" style="--bulma-card-radius:0; width:100%">
+                <div class="card-content py-0">
+                    <div class="content grid">
+                        <h4 class="mt-3 cell">${name} by ${artist}</h4>
+                        <img class="cell" src=${imageURL} height="50px" width="50px">
                     </div></div></div>`;
             document.querySelector(DOMElements.songContainer).insertAdjacentHTML('beforeend', html);
         },
@@ -236,7 +238,7 @@ const APPController = (function(UICtrl,SPTCtrl) {
         localStorage.setItem('genre',genreId);
         UICtrl.resetPlaylist();
         UICtrl.inputField().submitPlaylist.style.display = 'flex';
-        genreSelect.value = '';
+        genreSelect.value = ''; // Reset genre select input field
 
         // If genre has playlists display the options
         // If an error occurs, remove the submssion button, and inform user
@@ -262,8 +264,12 @@ const APPController = (function(UICtrl,SPTCtrl) {
         const playlistSelect = UICtrl.inputField().playlist;
         const tracksEndPoint = playlistSelect.value;
         const tracks = await SPTCtrl.getTracks(token, tracksEndPoint);
-        tracks.forEach(el => UICtrl.createTrack(el.track.href, el.track.name));
-        // Display track cover image and artist?
+
+        // Create track card for each track in the playlist
+        tracks.forEach(async (el) => {
+            const track = await SPTCtrl.getTrack(token, el.track.href);
+            UICtrl.createTrack(track.name, track.artists[0].name, track.album.images[2].url);
+        });
     });
 
     return {
