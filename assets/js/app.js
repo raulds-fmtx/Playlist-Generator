@@ -120,6 +120,7 @@ const UIController = (function() {
         selectPlaylist: '#select-playlist',
         submitPlaylist: '#submit-playlist',
         songContainer: '#song-container',
+        mainImage: '#main-image',
         accessToken: '#hidden-token'
     }
 
@@ -137,7 +138,8 @@ const UIController = (function() {
                 submitGenre: document.querySelector(DOMElements.submitGenre),
                 playlist: document.querySelector(DOMElements.selectPlaylist),
                 submitPlaylist: document.querySelector(DOMElements.submitPlaylist),
-                songList: document.querySelector(DOMElements.songContainer)
+                songList: document.querySelector(DOMElements.songContainer),
+                mainImage: document.querySelector(DOMElements.mainImage)
             }
         },
         autocompleteGenres(genres) {
@@ -191,6 +193,13 @@ const UIController = (function() {
             this.inputField().playlist.innerHTML = '';
             this.resetTracks();
         },
+        createCoverImage(imageURL) {
+            this.inputField().mainImage.src = imageURL;
+        },
+        removeCoverImage() {
+            const imageURL = "https://craftypixels.com/placeholder-image/256x256/14161a/14161a";
+            this.inputField().mainImage.src = imageURL;
+        },
         storeToken(value) {
             /**
              * Stores hidden token
@@ -237,6 +246,7 @@ const APPController = (function(UICtrl,SPTCtrl) {
 
         localStorage.setItem('genre',genreId);
         UICtrl.resetPlaylist();
+        UICtrl.removeCoverImage();
         UICtrl.inputField().submitPlaylist.style.display = 'flex';
         genreSelect.value = ''; // Reset genre select input field
 
@@ -265,10 +275,17 @@ const APPController = (function(UICtrl,SPTCtrl) {
         const tracksEndPoint = playlistSelect.value;
         const tracks = await SPTCtrl.getTracks(token, tracksEndPoint);
 
-        // Create track card for each track in the playlist
+        // Create track card for each track in the playlist and add cover image
+        let image_set = false; // flag variable
         tracks.forEach(async (el) => {
-            const track = await SPTCtrl.getTrack(token, el.track.href);
-            UICtrl.createTrack(track.name, track.artists[0].name, track.album.images[2].url);
+
+            const track = await SPTCtrl.getTrack(token, el.track.href); // get track info
+            UICtrl.createTrack(track.name, track.artists[0].name, track.album.images[2].url); // create track element
+            if (image_set === false) { // create track cover image
+                UICtrl.createCoverImage(track.album.images[1].url);
+                image_set = true;
+            }
+
         });
     });
 
