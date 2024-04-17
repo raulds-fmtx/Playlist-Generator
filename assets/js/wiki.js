@@ -52,7 +52,7 @@ $(document).ready(function() {
 
     function displayMusicGenreDescription(genre) {
         var description = getGenreDescription(genre);
-        $('#search-results').val(description);
+        $('#search-results').text(description);
     }
 
     function getGenreDescription(genre) {
@@ -144,12 +144,10 @@ $(document).ready(function() {
         searchResults.empty(); // Clear previous search results
         
         // Append search results to the designated area on the page
-        for (var i = 0; i < data[1].length; i++) {
-            var title = data[1][i];
-            var snippet = data[2][i];
-            var url = data[3][i];
-            var resultItem = '<div class="result-item"><h3><a href="' + url + '" target="_blank">' + title + '</a></h3><p>' + snippet + '</p></div>';
-            searchResults.append(resultItem);
-        }
+        var title = data[1][0];
+        var message = "Click the link above to learn more!";
+        var url = data[3][0];
+        var resultItem = '<div class="result-item"><h3><a href="' + url + '" target="_blank">' + title + '</a></h3><p>' + message + '</p></div>';
+        searchResults.append(resultItem);
     }
 });
