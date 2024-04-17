@@ -251,7 +251,7 @@ const APPController = (function(UICtrl,SPTCtrl) {
         genreSelect.value = ''; // Reset genre select input field
 
         // If genre has playlists display the options
-        // If an error occurs, remove the submssion button, and inform user
+        // If an error occurs, remove the submssion button and inform user
         try {
             const playlists = await SPTCtrl.getPlaylistsByGenre(token, genreId);
             playlists.forEach(p => UICtrl.createPlaylist(p.name, p.tracks.href));

@@ -4,6 +4,7 @@
     color:white;
 }
 
+/* Displays dimensions of upper nav bar */
 .navbar {
     width: 100%;
     font-size: large;
@@ -11,6 +12,7 @@
     text-align: center;
 }
 
+/* Displays properties of left panel where wiki description generates */
 .panel {
     width: 100%;
     height: 600px;
