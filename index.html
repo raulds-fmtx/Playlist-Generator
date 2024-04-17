@@ -49,6 +49,7 @@
         <div class="wiki column is-one-quarter ml-2"> 
             <nav class="panel has-text-centered">
                 <p class="panel-heading has-background-success has-text-dark">Genre Information</p>
+                <textarea class="textarea" id="search-results" readonly></textarea>
             </nav>
         </div>
         <!--J.G Wiki Panel Ends-->
@@ -66,7 +67,7 @@
                             />
                         </div>
                         <div class="navbar-item js-modal-trigger" data-target="playlist-select" id="submit-genre">
-                            <button class="button is-success">Submit</button>
+                            <button class="button is-success" id="search-wikipedia">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -90,6 +91,7 @@
         integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script> -->
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/modal.js"></script>
+    <script src="./assets/js/wiki.js"></script>
 </body>
 
 </html>

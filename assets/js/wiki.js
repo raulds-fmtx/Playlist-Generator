@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#search-wikipedia').click(function() {
-        var query = $('#search-query').val();
+        var query = $('#select-genre').val();
         if (query) {
             searchWikipedia(query);
         }
