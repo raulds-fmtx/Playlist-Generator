@@ -4,6 +4,10 @@
     color:white;
 }
 
+body {
+    height: 100vh;
+}
+
 /* Displays dimensions of upper nav bar */
 .navbar {
     width: 100%;

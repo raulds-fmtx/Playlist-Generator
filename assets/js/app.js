@@ -175,7 +175,7 @@ const UIController = (function() {
             `<div class="card is-background-dark m-0" style="--bulma-card-radius:0; width:100%">
                 <div class="card-content py-0">
                     <div class="content grid">
-                        <h4 class="mt-3 cell">${name} by ${artist}</h4>
+                        <h4 class="mt-3 cell has-text-light">${name} by ${artist}</h4>
                         <img class="cell" src=${imageURL} height="50px" width="50px">
                     </div></div></div>`;
             document.querySelector(DOMElements.songContainer).insertAdjacentHTML('beforeend', html);
@@ -197,7 +197,7 @@ const UIController = (function() {
             this.inputField().mainImage.src = imageURL;
         },
         removeCoverImage() {
-            const imageURL = "https://craftypixels.com/placeholder-image/256x256/14161a/14161a";
+            const imageURL = "https://craftypixels.com/placeholder-image/256x256/13161a/13161a";
             this.inputField().mainImage.src = imageURL;
         },
         storeToken(value) {

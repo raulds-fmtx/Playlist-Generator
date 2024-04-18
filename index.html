@@ -15,16 +15,16 @@
     <title>Playlist Generator</title>
 </head>
 
-<body>
-    <div class="section1 has-text-centered has-background-dark has-text-light mb-2">
-        <h1 class="is-size-1">Playlist Generator</h1>
+<body class="has-background-black-bis">
+    <div class="section1 has-text-centered theme-dark mb-2">
+        <h1 class="is-size-1 has-text-light">Playlist Generator</h1>
     </div>
 
-    <div id="playlist-select" class="modal">
+    <div id="playlist-select" class="modal theme-dark">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title">Select-Playlist</p>
+                <p class="modal-card-title">Select a playlist</p>
                 <button class="delete" aria-label="close"></button>
             </header>
             <section class="modal-card-body">
@@ -44,28 +44,28 @@
     </div>
       
 
-    <div class="section2 columns"> 
+    <div class="section2 columns theme-dark"> 
         <!--J.G Wiki Panel Starts-->
         <div class="wiki column is-one-quarter ml-2"> 
             <nav class="panel has-text-centered">
                 <p class="panel-heading has-background-success has-text-dark">Genre Information</p>
                 <figure class="image is-256x256 my-4 mx-4">
-                    <img class="is-rounded" id="main-image" src="https://craftypixels.com/placeholder-image/256x256/14161a/14161a" />
+                    <img class="is-rounded" id="main-image" src="https://craftypixels.com/placeholder-image/256x256/13161a/13161a" />
                   </figure>
                     <!--Dynamic Text for Wiki-->
-                  <div class="block mx-4" id="search-results">
+                  <div class="block mx-4 has-text-light" id="search-results">
                   </div>
             </nav>
         </div>
         <!--J.G Wiki Panel Ends-->
-        <div class="genre column is-three-quarters">
+        <div class="genre column is-three-quarters theme-dark">
             <!--Genre Selector dropdown Menu Begins-->
             <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div id="selection-navbar" class="navbar-menu">
                     <div class="navbar-start">  
                         <div class="navbar-item ui-widget">
                             <input
-                                class="input is-success"
+                                class="input is-success has-text-light"
                                 id="select-genre"
                                 type="text"
                                 placeholder="Select Genre"
